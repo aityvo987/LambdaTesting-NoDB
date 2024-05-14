@@ -1,0 +1,26 @@
+service: firstapi
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: provided.al2
+  architecture: arm64
+  region: ap-southeast-1
+
+package:
+  individually: true
+  
+  patterns:
+    - '!./**'
+    - ./bin/**
+
+functions:
+  postEmployee:
+    handler: bootstrap
+    package:
+      artifact: bin/postEmployee.zip
+    events:
+      - http:
+          path: /employee
+          method: post
+  
